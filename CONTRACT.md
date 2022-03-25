@@ -25,4 +25,4 @@ Conflicts relating to design decisions will be addressed according to the method
 ---
 
 ## Signatures
-Telmen Bayarsaikhan (tbayar2), Anish Sabnis (anishks2)
+Telmen Bayarsaikhan (tbayar2), Anish Sabnis (anishks2), Andrew Chemaly (chemaly3)
