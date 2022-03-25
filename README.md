@@ -1,2 +1,2 @@
-# anishks2-tbayar2-chemaly3-gilmer2
+# CS225 Final Project
 Team name: 11:59
