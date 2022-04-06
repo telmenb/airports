@@ -1,10 +1,10 @@
 # Grade
 
-Competent (90%) (Old- Incomplete (0%))
+Competent (90%) (Previously- Incomplete (0%))
 
 Fixed all issues
 
-Old - 
+Previously - 
 
 Please resubmit after fixing the major (and minor) flaws mentioned below.
 
