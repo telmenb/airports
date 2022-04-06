@@ -9,7 +9,7 @@ tests: bin/tests
 bin:
 	mkdir bin
 
-bin/exec: src/main.cpp
+bin/exec: src/main.cpp src/flight_graph.cpp
 	$(CXX) $(CXXFLAGS) $(CXXEXTRAS) $(INCLUDES) $^ -o $@
 
 bin/tests: tests/tests.cpp
