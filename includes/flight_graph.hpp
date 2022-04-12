@@ -13,7 +13,7 @@
 class FlightGraph {
 public:
     // Default constructor
-    FlightGraph();
+    FlightGraph(std::string airport_path, std::string route_path);
 
     // Rule of three --------------------------------------
     // FlightGraph(const FlightGraph& other);
@@ -33,10 +33,14 @@ public:
     // PageRank
     // std::vector<Airport*> GetRanking(int num);
 
+    Airport* GetAirport(std::string iata);
+    size_t MapSize() { return map_.size(); }
+
 private:
     // Hashmap to query airports
     std::map<std::string, std::pair<Airport*, int>> map_;
     
     // Helper functions
     void SetDestination(std::string dep_iata, std::string arr_iata);
+    void ReadAirportData(std::string airport_path);
 };

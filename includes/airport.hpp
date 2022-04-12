@@ -5,7 +5,7 @@
 #include <utility>
 
 struct Airport {
-    Airport(std::string code, std::string name, std::string country, std::string lng, std::string lat)
+    Airport(std::string code, std::string name, std::string country, std::string lat, std::string lng)
         : iata(code), longitude(lng), latitude(lat), name(name), country(country) {}
 
     std::string iata;
