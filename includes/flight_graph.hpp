@@ -6,8 +6,10 @@
 #include <vector>
 #include <string>
 #include <utility>
+#include <cmath>
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
 #include <iostream>
 
 class FlightGraph {
@@ -34,13 +36,17 @@ public:
     // std::vector<Airport*> GetRanking(int num);
 
     Airport* GetAirport(std::string iata);
-    size_t MapSize() { return map_.size(); }
+    size_t MapSize() const { return map_.size(); }
+    const std::vector<std::pair<Airport*, int>>& GetDestinations(Airport* src) const;
 
 private:
     // Hashmap to query airports
     std::map<std::string, std::pair<Airport*, int>> map_;
     
     // Helper functions
-    void SetDestination(std::string dep_iata, std::string arr_iata);
     void ReadAirportData(std::string airport_path);
+    void ReadRoutesData(std::string routes_path);
+    void SetDestination(Airport* src, Airport* dest);
 };
+
+int CalculateDistance(double lat1, double lon1, double lat2, double lon2);

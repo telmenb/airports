@@ -5,7 +5,7 @@
 
 // Graph Constructor Tests
 TEST_CASE("test_get_airport", "[constructor]") {
-    FlightGraph fgraph("data/test_airport_data.dat", "test");
+    FlightGraph fgraph("data/test_airport.dat", "test");
 
     Airport* airport1 = fgraph.GetAirport("GKA");
     Airport* airport3 = fgraph.GetAirport("HGU");
@@ -25,13 +25,13 @@ TEST_CASE("test_get_airport", "[constructor]") {
 }
 
 TEST_CASE("skip_no_iata", "[constructor]") {
-    FlightGraph fgraph("data/test_airport_data.dat", "test");
+    FlightGraph fgraph("data/test_airport.dat", "test");
 
     REQUIRE(fgraph.MapSize() == 9);
 }
 
 TEST_CASE("right_airport_values", "[constructor]") {
-    FlightGraph fgraph("data/test_airport_data.dat", "test");
+    FlightGraph fgraph("data/test_airport.dat", "test");
 
     Airport* airport1 = fgraph.GetAirport("GKA");
     REQUIRE(airport1->iata == "GKA");
@@ -46,4 +46,9 @@ TEST_CASE("right_airport_values", "[constructor]") {
     REQUIRE(airport5->country == "Papua New Guinea");
     REQUIRE(airport5->latitude == "-9.443380355834961");
     REQUIRE(airport5->longitude == "147.22000122070312");
+}
+
+TEST_CASE("haversine_distance", "[constructor]") {
+    // https://www.movable-type.co.uk/scripts/latlong.html
+    REQUIRE(CalculateDistance(-6.081689834590001, 145.391998291, -5.20707988739, 145.789001465) == 106);
 }

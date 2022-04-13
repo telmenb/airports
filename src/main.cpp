@@ -6,7 +6,7 @@ int main() {
     
     std::cout << "Hello world!\n";
     
-    FlightGraph fg("data/airports.dat", "data/routes.dat");
+    FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
 
     return 0;
 }
