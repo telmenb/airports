@@ -82,14 +82,7 @@ Airport* FlightGraph::GetAirport(std::string iata) {
     return query->second.first;
 }
 
-const std::vector<std::pair<Airport*, int>>& FlightGraph::GetDestinations(Airport* src) const {
-    if (src) {
-        return src->destinations;
-    }
-    throw std::runtime_error("No airport");
-}
-
- int CalculateDistance(double lat1, double lon1, double lat2, double lon2) {
+int CalculateDistance(double lat1, double lon1, double lat2, double lon2) {
     double d_lat = (lat2 - lat1) * M_PI / 180.0;
     double d_lon = (lon2 - lon1) * M_PI / 180.0;
 

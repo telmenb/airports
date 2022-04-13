@@ -52,3 +52,19 @@ TEST_CASE("haversine_distance", "[constructor]") {
     // https://www.movable-type.co.uk/scripts/latlong.html
     REQUIRE(CalculateDistance(-6.081689834590001, 145.391998291, -5.20707988739, 145.789001465) == 106);
 }
+
+TEST_CASE("right_destinations", "[constructor]") {
+    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+
+    Airport* airport4 = fgraph.GetAirport("LAE");
+    REQUIRE(airport4->destinations.size() == 3);
+    REQUIRE(airport4->destinations.at(0).first == fgraph.GetAirport("GKA"));
+    REQUIRE(airport4->destinations.at(0).second == 157);
+}
+
+TEST_CASE("skip_duplicate_routes", "[constructor]") {
+    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+
+    Airport* airport8 = fgraph.GetAirport("GOH");
+    REQUIRE(airport8->destinations.size() == 2);
+}
