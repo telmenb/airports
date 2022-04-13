@@ -17,6 +17,7 @@ void FlightGraph::delete_graph(){
     for (auto it = map_.begin(); it != map_.end(); ++it) {
         delete it->second.first;
     }
+    map_.clear();
 }
 
 void FlightGraph::copy_graph(const FlightGraph& other){

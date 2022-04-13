@@ -68,3 +68,29 @@ TEST_CASE("skip_duplicate_routes", "[constructor]") {
     Airport* airport8 = fgraph.GetAirport("GOH");
     REQUIRE(airport8->destinations.size() == 2);
 }
+
+TEST_CASE("copy_constructor", "[copy]"){
+    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fg1(fgraph);
+
+    REQUIRE_FALSE(fgraph.GetAirport("GKA") == fg1.GetAirport("GKA"));
+}
+
+TEST_CASE("assignment", "[copy]"){
+    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fg2 = fgraph;
+
+    REQUIRE_FALSE(fgraph.GetAirport("GKA") == fg2.GetAirport("GKA"));
+}
+
+TEST_CASE("assignment_2", "[copy]"){
+    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fg2("data/airports.dat", "data/routes.dat");
+
+    REQUIRE_FALSE(fgraph.MapSize() == fg2.MapSize());
+
+    fg2 = fgraph;
+
+    REQUIRE_FALSE(fgraph.GetAirport("GKA") == fg2.GetAirport("GKA"));
+    REQUIRE(fgraph.MapSize() == fg2.MapSize());
+}
