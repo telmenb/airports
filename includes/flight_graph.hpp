@@ -11,6 +11,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <iostream>
+#include <stack>
 
 class FlightGraph {
 public:
@@ -23,8 +24,8 @@ public:
     ~FlightGraph();
     //-----------------------------------------------------
 
-    // DFS traversal
-    // void DepthFirstTraverse(std::string start);
+    //DFS traversal
+    void DepthFirstTraverse(std::string start);
 
     // BFS shortest path
     // std::vector<Airport*> ShortestPathAirports(std::string start, std::string end);
@@ -36,6 +37,8 @@ public:
     // std::vector<Airport*> GetRanking(int num);
 
     Airport* GetAirport(std::string iata);
+    bool HasVisited(std::string iata);
+    void SetVisited(std::string iata);
     size_t MapSize() const { return map_.size(); }
     const std::vector<std::pair<Airport*, int>>& GetDestinations(Airport* src) const;
 

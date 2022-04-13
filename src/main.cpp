@@ -8,9 +8,7 @@ int main() {
     
     FlightGraph fg("data/test_airport.dat", "data/test_routes.dat");
 
-    FlightGraph fg1(fg);
-
-    FlightGraph fg2 = fg;
+    fg.DepthFirstTraverse("LAE");
 
     return 0;
 }

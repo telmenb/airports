@@ -106,6 +106,20 @@ Airport* FlightGraph::GetAirport(std::string iata) {
     return query->second.first;
 }
 
+bool FlightGraph::HasVisited(std::string iata) {
+    auto query = map_.find(iata);
+    if (query == map_.end())
+        return true;
+    return query->second.second;
+}
+
+void FlightGraph::SetVisited(std::string iata) {
+    auto query = map_.find(iata);
+    if (query == map_.end())
+        return;
+    query->second.second = 1;
+}
+
 int CalculateDistance(double lat1, double lon1, double lat2, double lon2) {
     double d_lat = (lat2 - lat1) * M_PI / 180.0;
     double d_lon = (lon2 - lon1) * M_PI / 180.0;
@@ -119,4 +133,29 @@ int CalculateDistance(double lat1, double lon1, double lat2, double lon2) {
     double computation = 2 * asin(sqrt(angle));
     double radius = 6371;
     return (int) (radius * computation);
+}
+
+void FlightGraph::DepthFirstTraverse(std::string start){
+    std::ofstream ostr;
+    ostr.open ("bin/dfs_output.txt");
+    Airport *start_ = GetAirport(start);
+    std::stack<Airport*> dfs_stack;
+
+    SetVisited(start_->iata);
+    dfs_stack.push(start_);
+    ostr << start_->iata << "\n";
+    while(!dfs_stack.empty()){
+        Airport* cur = dfs_stack.top();
+        for(size_t i = 0; i < cur->destinations.size(); i++) {
+            Airport* destination = cur->destinations.at(i).first;
+            if(!HasVisited(destination->iata)) {
+                SetVisited(destination->iata);
+                ostr << destination->iata << "\n";
+                dfs_stack.push(destination);
+            }
+        }
+        dfs_stack.pop();
+    }
+
+    ostr.close();
 }
