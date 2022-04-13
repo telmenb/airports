@@ -141,20 +141,21 @@ void FlightGraph::DepthFirstTraverse(std::string start){
     Airport *start_ = GetAirport(start);
     std::stack<Airport*> dfs_stack;
 
-    SetVisited(start_->iata);
     dfs_stack.push(start_);
-    ostr << start_->iata << "\n";
     while(!dfs_stack.empty()){
         Airport* cur = dfs_stack.top();
+        if (HasVisited(cur->iata)) {
+            dfs_stack.pop();
+            continue;
+        }
         for(size_t i = 0; i < cur->destinations.size(); i++) {
             Airport* destination = cur->destinations.at(i).first;
-            if(!HasVisited(destination->iata)) {
-                SetVisited(destination->iata);
-                ostr << destination->iata << "\n";
-                dfs_stack.push(destination);
+            if (!HasVisited(destination->iata)) {
+            dfs_stack.push(destination);
             }
         }
-        dfs_stack.pop();
+        ostr << cur->iata << "\n";
+        SetVisited(cur->iata);
     }
 
     ostr.close();
