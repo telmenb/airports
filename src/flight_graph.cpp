@@ -5,10 +5,33 @@ FlightGraph::FlightGraph(std::string airport_path, std::string route_path) {
     ReadRoutesData(route_path);
 }
 
+FlightGraph::FlightGraph(const FlightGraph& other){
+    copy_graph(other);
+}
+
 FlightGraph::~FlightGraph() {
+    delete_graph();
+}
+
+void FlightGraph::delete_graph(){
     for (auto it = map_.begin(); it != map_.end(); ++it) {
         delete it->second.first;
     }
+}
+
+void FlightGraph::copy_graph(const FlightGraph& other){
+    for (auto it = other.map_.begin(); it != other.map_.end(); ++it){
+        Airport* otr_airport = it->second.first;
+        Airport *airport_ = new Airport(otr_airport->iata, otr_airport->name, otr_airport->country,
+                                        otr_airport->latitude, otr_airport->longitude);
+        map_[it->first] = std::make_pair(airport_, it->second.second);
+    }
+}
+
+const FlightGraph& FlightGraph::operator=(const FlightGraph& other){
+    delete_graph();
+    copy_graph(other);
+    return *this;
 }
 
 void FlightGraph::ReadAirportData(std::string airport_path) {

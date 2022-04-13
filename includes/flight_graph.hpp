@@ -18,8 +18,8 @@ public:
     FlightGraph(std::string airport_path, std::string route_path);
 
     // Rule of three --------------------------------------
-    // FlightGraph(const FlightGraph& other);
-    // const FlightGraph& operator=(const FlightGraph& other);
+    FlightGraph(const FlightGraph& other);
+    const FlightGraph& operator=(const FlightGraph& other);
     ~FlightGraph();
     //-----------------------------------------------------
 
@@ -47,6 +47,8 @@ private:
     void ReadAirportData(std::string airport_path);
     void ReadRoutesData(std::string routes_path);
     void SetDestination(Airport* src, Airport* dest);
+    void delete_graph();
+    void copy_graph(const FlightGraph& other);
 };
 
 int CalculateDistance(double lat1, double lon1, double lat2, double lon2);
