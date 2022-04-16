@@ -6,9 +6,9 @@ int main() {
     
     std::cout << "Hello world!\n";
     
-    FlightGraph fg("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
 
-    fg.DepthFirstTraverse("LAE");
+    fg.DepthFirstTraverse("HGU");
 
     return 0;
 }
