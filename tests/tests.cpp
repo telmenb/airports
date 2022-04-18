@@ -1,11 +1,12 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+#include <fstream>
 #include "flight_graph.hpp"
 #include "airport.hpp"
 
 // Graph Constructor Tests
 TEST_CASE("test_get_airport", "[constructor]") {
-    FlightGraph fgraph("data/test_airport.dat", "test");
+    FlightGraph fgraph("data/test_airports.dat", "test");
 
     Airport* airport1 = fgraph.GetAirport("GKA");
     Airport* airport3 = fgraph.GetAirport("HGU");
@@ -25,13 +26,13 @@ TEST_CASE("test_get_airport", "[constructor]") {
 }
 
 TEST_CASE("skip_no_iata", "[constructor]") {
-    FlightGraph fgraph("data/test_airport.dat", "test");
+    FlightGraph fgraph("data/test_airports.dat", "test");
 
     REQUIRE(fgraph.MapSize() == 9);
 }
 
 TEST_CASE("right_airport_values", "[constructor]") {
-    FlightGraph fgraph("data/test_airport.dat", "test");
+    FlightGraph fgraph("data/test_airports.dat", "test");
 
     Airport* airport1 = fgraph.GetAirport("GKA");
     REQUIRE(airport1->iata == "GKA");
@@ -54,7 +55,7 @@ TEST_CASE("haversine_distance", "[constructor]") {
 }
 
 TEST_CASE("right_destinations", "[constructor]") {
-    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
 
     Airport* airport4 = fgraph.GetAirport("LAE");
     REQUIRE(airport4->destinations.size() == 3);
@@ -63,28 +64,28 @@ TEST_CASE("right_destinations", "[constructor]") {
 }
 
 TEST_CASE("skip_duplicate_routes", "[constructor]") {
-    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
 
     Airport* airport8 = fgraph.GetAirport("GOH");
     REQUIRE(airport8->destinations.size() == 2);
 }
 
 TEST_CASE("copy_constructor", "[copy]"){
-    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
     FlightGraph fg1(fgraph);
 
     REQUIRE_FALSE(fgraph.GetAirport("GKA") == fg1.GetAirport("GKA"));
 }
 
 TEST_CASE("assignment", "[copy]"){
-    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
     FlightGraph fg2 = fgraph;
 
     REQUIRE_FALSE(fgraph.GetAirport("GKA") == fg2.GetAirport("GKA"));
 }
 
 TEST_CASE("assignment_2", "[copy]"){
-    FlightGraph fgraph("data/test_airport.dat", "data/test_routes.dat");
+    FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
     FlightGraph fg2("data/airports.dat", "data/routes.dat");
 
     REQUIRE_FALSE(fgraph.MapSize() == fg2.MapSize());
@@ -93,4 +94,18 @@ TEST_CASE("assignment_2", "[copy]"){
 
     REQUIRE_FALSE(fgraph.GetAirport("GKA") == fg2.GetAirport("GKA"));
     REQUIRE(fgraph.MapSize() == fg2.MapSize());
+}
+
+TEST_CASE("DFS traversal", "[DFS]") {
+    FlightGraph fgraph("data/test_airports.dat", "data/test_routes_dfs.dat");
+    fgraph.DepthFirstTraverse("HGU");
+    std::ifstream expected("tests/expected_dfs_output.txt");
+    std::ifstream actual("bin/dfs_output.txt");
+    std::string exp_line;
+    std::string act_line;
+
+    while (std::getline(actual, act_line)) {
+        std::getline(expected, exp_line);
+        REQUIRE(exp_line == act_line);
+    }
 }
