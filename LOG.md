@@ -20,3 +20,13 @@ After stubbing out the header files, Anish and I sat down together to work on th
 We set goals for each other where I was supposed to start writing tests and Anish would try to process the routes data. We have not progressed very far since then, unfortunately.  
 
 We are definitely hoping to pick up the pace on our project and sprint to complete the constructor, as well as DFS traversal the meet the mid-project check-in date.
+
+### Week 3 - April 13th (Anish Sabnis)
+
+Our objective this week was to complete the constructor and complete the DFS traversal. 
+
+Over the week, in the nodes, we have added the adjency list and the weights using the Haversine formula. We found the Haversine formula online and formed that into a function to get the weights. I worked to complete this portion of the project, while Telmen began working on the DFS formula. As our team has shrunk, we are both helping each other out on all parts of the project. Thankfully, we were able to complete both goals.
+
+The biggest roadblock we encountered was our team shrinking in half. This has made us work much harder in order to accomplish our goals. We still believe we will be able to complete all our goals. Another issue we encountered while working on the DFS algorithm is we were using a queue, but we quickly realized this and fixed it. We found this after doing a manual DFS and seeing the output not including all the nodes.
+
+Next week, we hope to complete Djikstra's algorithm. We saw it during lecture and hope to use it to help us.
