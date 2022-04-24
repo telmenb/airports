@@ -12,6 +12,8 @@
 #include <stdexcept>
 #include <iostream>
 #include <stack>
+#include <queue>
+#include <algorithm>
 
 class FlightGraph {
 public:
@@ -28,7 +30,7 @@ public:
     void DepthFirstTraverse(std::string start);
 
     // BFS shortest path
-    // std::vector<Airport*> ShortestPathAirports(std::string start, std::string end);
+    std::vector<Airport*> ShortestPathAirports(std::string start, std::string end);
 
     // Dijkstra's shortest path
     // std::vector<Airport*> ShortestPathDistance(std::string start, std::string end);

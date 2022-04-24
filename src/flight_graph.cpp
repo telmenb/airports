@@ -110,7 +110,7 @@ bool FlightGraph::HasVisited(std::string iata) {
     auto query = map_.find(iata);
     if (query == map_.end())
         return true;
-    return query->second.second;
+    return query->second.second != 0;
 }
 
 void FlightGraph::SetVisited(std::string iata) {
@@ -159,4 +159,44 @@ void FlightGraph::DepthFirstTraverse(std::string start){
     }
 
     ostr.close();
+}
+
+std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::string end) {
+    Airport* origin = GetAirport(start);
+    std::queue<Airport*> bfs_queue;
+    std::map<Airport*, Airport*> track;
+
+    bfs_queue.push(origin);
+    track[origin] = NULL;
+    while (!bfs_queue.empty()) {
+        Airport* cur = bfs_queue.front();
+        SetVisited(cur->iata);
+        if (cur->iata == end) {
+            break;
+        }
+
+        for (size_t i = 0; i < cur->destinations.size(); i++) {
+            Airport* dest_ptr = cur->destinations.at(i).first;
+            if (!HasVisited(dest_ptr->iata)) {
+                if (track.find(dest_ptr) == track.end())
+                    track[dest_ptr] = cur;
+                bfs_queue.push(dest_ptr);
+            }
+        }
+        bfs_queue.pop();
+    }
+
+    if (bfs_queue.empty())
+        return std::vector<Airport*>();
+
+    std::vector<Airport*> to_return;
+    auto iter = track.find(bfs_queue.front());
+    while (iter->second != NULL) {
+        to_return.push_back(iter->first);
+        iter = track.find(iter->second);
+    }
+    to_return.push_back(iter->first);
+
+    std::reverse(to_return.begin(), to_return.end());
+    return to_return;
 }
