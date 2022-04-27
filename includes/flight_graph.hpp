@@ -1,6 +1,7 @@
 #pragma once
 
 #include "airport.hpp"
+#include "heap.hpp"
 
 #include <map>
 #include <vector>
@@ -33,7 +34,7 @@ public:
     std::vector<Airport*> ShortestPathAirports(std::string start, std::string end);
 
     // Dijkstra's shortest path
-    // std::vector<Airport*> ShortestPathDistance(std::string start, std::string end);
+    std::vector<Airport*> ShortestPathDistance(std::string start, std::string end);
 
     // PageRank
     // std::vector<Airport*> GetRanking(int num);

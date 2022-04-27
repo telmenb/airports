@@ -3,6 +3,7 @@
 #include <fstream>
 #include "flight_graph.hpp"
 #include "airport.hpp"
+#include "heap.hpp"
 
 // Graph Constructor Tests
 TEST_CASE("test_get_airport", "[constructor]") {
@@ -108,4 +109,44 @@ TEST_CASE("DFS traversal", "[DFS]") {
         std::getline(expected, exp_line);
         REQUIRE(exp_line == act_line);
     }
+}
+
+TEST_CASE("Heap Expected", "[heap]") {
+    Airport air0;
+    Airport air1;
+    Airport air2;
+    Airport air3;
+    Airport air4;
+
+    air0.dij_dist = 5;
+    air1.dij_dist = 80;
+    air2.dij_dist = 200;
+    air3.dij_dist = 3;
+    air4.dij_dist = 1;
+
+    heap pri_queue;
+
+    REQUIRE(pri_queue.empty());
+
+    REQUIRE(pri_queue.root() == 1);
+
+    pri_queue.push(&air0);
+    REQUIRE(pri_queue.peek() == &air0);
+
+    pri_queue.push(&air1);
+    pri_queue.push(&air2);
+    pri_queue.push(&air3);
+    pri_queue.push(&air4);
+
+    REQUIRE(pri_queue.peek() == &air4);
+
+    pri_queue.pop();
+    REQUIRE(pri_queue.peek() == &air3);
+
+    pri_queue.pop();
+    pri_queue.pop();
+    pri_queue.pop();
+    pri_queue.pop();
+
+    REQUIRE(pri_queue.empty());
 }

@@ -186,11 +186,51 @@ std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::
         bfs_queue.pop();
     }
 
-    if (bfs_queue.empty())
+    if (bfs_queue.empty()) {
         return std::vector<Airport*>();
+    }
 
     std::vector<Airport*> to_return;
     auto iter = track.find(bfs_queue.front());
+    while (iter->second != NULL) {
+        to_return.push_back(iter->first);
+        iter = track.find(iter->second);
+    }
+    to_return.push_back(iter->first);
+
+    std::reverse(to_return.begin(), to_return.end());
+    return to_return;
+}
+
+std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::string end) {
+    Airport* origin = GetAirport(start);
+    Airport* dest = GetAirport(end); // TODO: NULLCHECKS
+    std::map<Airport*, Airport*> track;
+    heap priority_queue;
+    origin->dij_dist = 0;
+    track[origin] = NULL;
+    priority_queue.push(origin);
+
+    while (!priority_queue.empty() && priority_queue.peek() != dest) {
+        Airport* cur = priority_queue.pop();
+        SetVisited(cur->iata);
+        for (size_t i = 0; i < cur->destinations.size(); i++) {
+            std::pair<Airport*, int> neighbor = cur->destinations.at(i);
+            if (cur->dij_dist + neighbor.second < neighbor.first->dij_dist && !HasVisited(neighbor.first->iata)) {
+                neighbor.first->dij_dist = cur->dij_dist + neighbor.second;
+                track[neighbor.first] = cur;
+                priority_queue.push(neighbor.first);
+            }
+        }
+    }
+
+
+    if (priority_queue.empty()) {
+        return std::vector<Airport*>();
+    }
+
+    std::vector<Airport*> to_return;
+    auto iter = track.find(priority_queue.peek());
     while (iter->second != NULL) {
         to_return.push_back(iter->first);
         iter = track.find(iter->second);

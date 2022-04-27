@@ -3,7 +3,7 @@ INCLUDES=-Iincludes/
 CXXEXTRAS=-Wall -Wextra -Werror -pedantic
 CXXFLAGS=-std=c++14 -g -fstandalone-debug
 SRC=src/*
-TEST_SRC=src/flight_graph.cpp
+TEST_SRC=src/flight_graph.cpp src/heap.cpp
 
 exec: bin/exec
 tests: bin/tests
