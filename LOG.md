@@ -30,3 +30,13 @@ Over the week, in the nodes, we have added the adjency list and the weights usin
 The biggest roadblock we encountered was our team shrinking in half. This has made us work much harder in order to accomplish our goals. We still believe we will be able to complete all our goals. Another issue we encountered while working on the DFS algorithm is we were using a queue, but we quickly realized this and fixed it. We found this after doing a manual DFS and seeing the output not including all the nodes.
 
 Next week, we hope to complete Djikstra's algorithm. We saw it during lecture and hope to use it to help us.
+
+### Week 4 - April 22nd (Telmen Bayarsaikhan)
+
+Our main objective this week was to start progress on the shortest path algorithms. Initially, we had hoped to complete both the BFS shortest path and Dijkstra's algorithm together by the end, but unfortunately we were only able to finish BFS.
+
+Anish and I got together and pair-programmed the function. We used a simple Breadth-First Search in tandem with a hashmap to keep track of previously visited airports for backtracking purposes.
+
+The biggest hurdle was not configuring the hashmap properly and resetting its previous airports. We had to change it so if an airport already had an entry in the map, we would skip over it.
+
+Next week's main tasks are writing comprehensive tests for the BFS shortest path, as well as finishing Dijkstra's algorithm.
