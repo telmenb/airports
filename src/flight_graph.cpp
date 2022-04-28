@@ -223,7 +223,7 @@ std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::
             }
         }
     }
-
+        
 
     if (priority_queue.empty()) {
         return std::vector<Airport*>();
@@ -239,4 +239,46 @@ std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::
 
     std::reverse(to_return.begin(), to_return.end());
     return to_return;
+}
+
+std::vector<Airport*> FlightGraph::GetRanking(){
+    //start at a random node
+    std::cout << "we made it\n";
+    auto item = map_.begin();
+    std::advance(item, rand_num()*map_.size()); // get random iterator from map
+
+    Airport* cur = (*item).second.first; //get the random airport from the random iterator;
+    (map_[cur->iata]).second += 1; //increment count of the airport;
+
+    //go to any of the neighbors 85% of the time;
+    //go to a completely random guy 15% of the time;
+    for (int i = 0; i < 100; i++){ //idk how many times to do it i just picked 10,000 randomly
+        int damp = std::rand() % 100;
+        if (damp < 86){
+            cur = (cur->destinations[std::rand() % cur->destinations.size()]).first; //get a random neighbor
+            (map_[cur->iata]).second += 1; //increment count of the airport
+        }
+        else{
+            auto iterator = map_.begin();
+            std::advance(iterator, rand_num()*map_.size());
+
+            Airport* cur = (*iterator).second.first; //get a new completely random
+            (map_[cur->iata]).second += 1; //increment count of the airport;
+        }
+    }
+
+    std::vector<Airport*> to_return;
+
+    for (auto it = map_.begin(); it != map_.end(); it++){
+        to_return.push_back((*it).second.first);
+    }   
+
+    sort(to_return.begin(), to_return.end());
+    return to_return;
+
+}
+
+int FlightGraph::rand_num(){
+    int rand = std::rand() % (map_.size()-1);
+    return rand;
 }
