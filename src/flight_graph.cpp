@@ -243,12 +243,16 @@ std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::
 
 std::vector<Airport*> FlightGraph::GetRanking(){
     //start at a random node
-    std::cout << "we made it\n";
     auto item = map_.begin();
-    std::advance(item, rand_num()*map_.size()); // get random iterator from map
+    std::advance(item, rand_num()*(map_.size()-1)); // get random iterator from map
 
-    Airport* cur = (*item).second.first; //get the random airport from the random iterator;
+    //SEGFAULT IS HAPPENING BELOW THIS 
+    Airport* cur = (*item).second.first; //get the random airport from the random iterator;     
+    //SEGFAULT IS HAPPENING RIGHT HERE^^^^^^^^^^^^^^^
     (map_[cur->iata]).second += 1; //increment count of the airport;
+   
+
+
 
     //go to any of the neighbors 85% of the time;
     //go to a completely random guy 15% of the time;
