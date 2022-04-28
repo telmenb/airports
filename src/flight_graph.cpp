@@ -247,7 +247,7 @@ std::vector<Airport*> FlightGraph::GetRanking(){
     std::advance(item, rand_num()*(map_.size()-1)); // get random iterator from map
 
     //SEGFAULT IS HAPPENING BELOW THIS 
-    Airport* cur = (*item).second.first; //get the random airport from the random iterator;     
+    Airport* cur = (*item).second.first;  //get the random airport from the random iterator;     
     //SEGFAULT IS HAPPENING RIGHT HERE^^^^^^^^^^^^^^^
     (map_[cur->iata]).second += 1; //increment count of the airport;
    
@@ -256,7 +256,7 @@ std::vector<Airport*> FlightGraph::GetRanking(){
 
     //go to any of the neighbors 85% of the time;
     //go to a completely random guy 15% of the time;
-    for (int i = 0; i < 100; i++){ //idk how many times to do it i just picked 10,000 randomly
+    for (int i = 0; i < 10000; i++){ //idk how many times to do it i just picked 10,000 randomly
         int damp = std::rand() % 100;
         if (damp < 86){
             cur = (cur->destinations[std::rand() % cur->destinations.size()]).first; //get a random neighbor
