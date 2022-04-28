@@ -270,7 +270,8 @@ std::vector<Airport*> FlightGraph::GetRanking(){
             (map_[cur->iata]).second += 1; //increment count of the airport;
         }
     }
-
+    
+    ///I really don't think this method of sorting will actually work VVVV
     std::vector<Airport*> to_return;
 
     for (auto it = map_.begin(); it != map_.end(); it++){
@@ -278,6 +279,8 @@ std::vector<Airport*> FlightGraph::GetRanking(){
     }   
 
     sort(to_return.begin(), to_return.end());
+    ///THERE's no way lol ^^^^
+
     return to_return;
 
 }
