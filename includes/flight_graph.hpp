@@ -37,7 +37,7 @@ public:
     std::vector<Airport*> ShortestPathDistance(std::string start, std::string end);
 
     // PageRank
-    std::vector<Airport*> GetRanking();
+    std::vector<std::pair<Airport*, int>> GetRanking(size_t iterations);
 
     Airport* GetAirport(std::string iata);
     bool HasVisited(std::string iata);
@@ -55,7 +55,8 @@ private:
     void SetDestination(Airport* src, Airport* dest);
     void delete_graph();
     void copy_graph(const FlightGraph& other);
-    int rand_num();
+    int rand_num_map();
+    // bool Sort_by_desc_sec(const std::pair<Airport*, int>& a, const std::pair<Airport*, int>& b);
 };
 
 int CalculateDistance(double lat1, double lon1, double lat2, double lon2);

@@ -22,11 +22,11 @@ struct Airport {
     /**
      * Construct a new Airport object.
      * 
-     * @param code The IATA code of the airport.
-     * @param name The name of the airport.
-     * @param country The country the airport belongs to.
-     * @param lat The real world latitude of the airport.
-     * @param lng The real world longitude of the airport.
+     * @param code The IATA code of the airport
+     * @param name The name of the airport
+     * @param country The country the airport belongs to
+     * @param lat The real world latitude of the airport
+     * @param lng The real world longitude of the airport
      */
     Airport(std::string code, std::string name, std::string country, std::string lat, std::string lng)
         : iata(code), longitude(lng), latitude(lat), name(name), country(country) {}
@@ -47,8 +47,8 @@ struct Airport {
     std::vector<std::pair<Airport*, int>> destinations;
 
     /**
-     * Comparison operator for Airport objects based on their dij_dist
-     * Used in implementing a min-priority queue of Airport objects (see heap.hpp)
+     * Comparison operator for Airport objects based on their dij_dist.
+     * Used in implementing a min-priority queue of Airport objects (see heap.hpp).
      * 
      * @param other The airport to compare with
      * @return true other has less dij_dist

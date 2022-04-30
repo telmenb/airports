@@ -241,51 +241,43 @@ std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::
     return to_return;
 }
 
-std::vector<Airport*> FlightGraph::GetRanking(){
+bool Sort_by_desc_sec(const std::pair<Airport*, int>& a,
+                      const std::pair<Airport*, int>& b) {
+    return a.second > b.second;
+}
+
+std::vector<std::pair<Airport*, int>> FlightGraph::GetRanking(size_t iterations){
     //start at a random node
-    auto item = map_.begin();
-    std::advance(item, rand_num()*(map_.size()-1)); // get random iterator from map
-
-    //SEGFAULT IS HAPPENING BELOW THIS 
-    Airport* cur = (*item).second.first;  //get the random airport from the random iterator;     
-    //SEGFAULT IS HAPPENING RIGHT HERE^^^^^^^^^^^^^^^
-    (map_[cur->iata]).second += 1; //increment count of the airport;
-   
-
-
+    std::srand(time(0));
+    auto iter = std::next(map_.begin(), rand_num_map()); //select random airport to start
+    iter->second.second += 1; //increment count of the airport;
+    Airport* surfer = iter->second.first;
 
     //go to any of the neighbors 85% of the time;
     //go to a completely random guy 15% of the time;
-    for (int i = 0; i < 10000; i++){ //idk how many times to do it i just picked 10,000 randomly
+    for (size_t i = 0; i < iterations; i++){ //idk how many times to do it i just picked 10,000 randomly
         int damp = std::rand() % 100;
-        if (damp < 86){
-            cur = (cur->destinations[std::rand() % cur->destinations.size()]).first; //get a random neighbor
-            (map_[cur->iata]).second += 1; //increment count of the airport
+        if (damp < 86 && surfer->destinations.size() != 0){
+            surfer = (surfer->destinations[std::rand() % surfer->destinations.size()]).first; //get a random neighbor
+            (map_[surfer->iata]).second += 1; //increment count of the airport
         }
         else{
-            auto iterator = map_.begin();
-            std::advance(iterator, rand_num()*map_.size());
-
-            Airport* cur = (*iterator).second.first; //get a new completely random
-            (map_[cur->iata]).second += 1; //increment count of the airport;
+            iter = std::next(map_.begin(), rand_num_map());
+            (map_[surfer->iata]).second += 1; //increment count of the airport;
         }
     }
-    
-    ///I really don't think this method of sorting will actually work VVVV
-    std::vector<Airport*> to_return;
 
+
+    std::vector<std::pair<Airport*, int>> to_return;
     for (auto it = map_.begin(); it != map_.end(); it++){
-        to_return.push_back((*it).second.first);
-    }   
+        to_return.push_back((*it).second);
+    }
 
-    sort(to_return.begin(), to_return.end());
-    ///THERE's no way lol ^^^^
-
+    std::sort(to_return.begin(), to_return.end(), Sort_by_desc_sec);
     return to_return;
-
 }
 
-int FlightGraph::rand_num(){
-    int rand = std::rand() % (map_.size()-1);
+int FlightGraph::rand_num_map(){
+    int rand = std::rand() % map_.size();
     return rand;
 }
