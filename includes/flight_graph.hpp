@@ -56,7 +56,6 @@ private:
     void delete_graph();
     void copy_graph(const FlightGraph& other);
     int rand_num_map();
-    // bool Sort_by_desc_sec(const std::pair<Airport*, int>& a, const std::pair<Airport*, int>& b);
 };
 
 int CalculateDistance(double lat1, double lon1, double lat2, double lon2);
