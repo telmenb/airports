@@ -4,8 +4,8 @@
 #include <vector>
 #include <utility>
 
-// Constant for maximum possible distance between two points on earth
-const int MAX_DIST = 30000;
+// Constant for more than maximum possible distance between two points on earth
+const int MAX_DIST = 50000;
 
 /**
  * Airport: a struct used as a node in the graph representing an Airport

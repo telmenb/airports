@@ -6,9 +6,17 @@ int main() {
     
     std::cout << "Hello world!\n";
     
-    FlightGraph fg("data/airports.dat", "data/routes.dat");
+    FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
+    // Airport* thu = fg.GetAirport("THU");
+    // for (size_t i = 0; i < thu->destinations.size(); i++) {
+    //     std::pair<Airport*, int> dest_pair = thu->destinations.at(i);
+    //     if (dest_pair.first->iata == "POM") {
+    //         dest_pair.second = 20000;
+    //         break;
+    //     }
+    // }
 
-    std::vector<Airport*> vec = fg.ShortestPathAirports("WAW", "ANC");
+    std::vector<Airport*> vec = fg.ShortestPathDistance("LAE", "GKA");
 
     std::cout << "vec size: " << vec.size() << std::endl;
 

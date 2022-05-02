@@ -175,10 +175,21 @@ TEST_CASE("bfs_shortest_path", "[shortest_path]") {
     std::vector<Airport*> route = fg.ShortestPathAirports("THU", "UAK");
     REQUIRE(route.size() == 4);
     // Can't do multiple at a time? ClearCount() not working???
+    // fg.ClearCount();
+    // route = fg.ShortestPathAirports("GKA", "GOH");
+    // REQUIRE(route.size() == 3);
 }
 
 TEST_CASE("bfs_shortest_path_not_found",  "[shortest_path]") {
     FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
     std::vector<Airport*> route = fg.ShortestPathAirports("UAK", "THU");
     REQUIRE(route.size() == 0);
+}
+
+TEST_CASE("dijkstra_shortest_path", "[shortest_path]") {
+    FlightGraph fg("data/airports.dat", "data/routes.dat");
+    Airport* thu = fg.GetAirport("THU");
+    std::vector<Airport*> route = fg.ShortestPathDistance("CMI", "JFK");
+    REQUIRE(route.size() == 3);
+    REQUIRE(route.at(1)->iata == "ORD");
 }

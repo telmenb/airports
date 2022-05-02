@@ -61,6 +61,8 @@ class heap
      */
     void updateElem(const size_t & idx, Airport* elem);
 
+    void rePrioritize();
+
     /**
      * Determines if the given heap is empty.
      *

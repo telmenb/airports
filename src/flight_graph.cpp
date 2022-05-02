@@ -175,9 +175,8 @@ std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::
     std::map<Airport*, Airport*> track;                             // Map to keep track of previous airport in path
     bfs_queue.push(origin);
     track[origin] = NULL;
-    while (!bfs_queue.empty()) {
+    while (!bfs_queue.empty() && bfs_queue.front()->iata != end) {
         Airport* cur = bfs_queue.front();
-        if (cur->iata == end) break;
 
         for (size_t i = 0; i < cur->destinations.size(); i++) {
             Airport* dest = cur->destinations.at(i).first;
@@ -194,7 +193,6 @@ std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::
     }
 
     if (bfs_queue.empty()) {                                        // No valid path found
-        std::cout << "exiting\n";
         return std::vector<Airport*>();
     }
 
@@ -237,7 +235,7 @@ std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::
         priority_queue.pop();
     }
     
-    if (priority_queue.empty()) {                                   // No valid path found
+    if (track.find(dest) == track.end()) {                          // No valid path found
         return std::vector<Airport*>();
     }
 
