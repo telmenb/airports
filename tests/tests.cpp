@@ -64,6 +64,14 @@ TEST_CASE("right_destinations", "[constructor]") {
     REQUIRE(airport4->destinations.at(0).second == 157);
 }
 
+TEST_CASE("right_arrivals", "[constructor]") {
+    FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
+
+    Airport* airport1 = fgraph.GetAirport("GKA");
+    REQUIRE(airport1->arrivals.size() == 3);
+    REQUIRE(airport1->arrivals.at(0)->iata == "MAG");
+}
+
 TEST_CASE("skip_duplicate_routes", "[constructor]") {
     FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
 

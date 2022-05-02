@@ -28,7 +28,7 @@ public:
     //-----------------------------------------------------
 
     //DFS traversal
-    void DepthFirstTraverse(std::string start);
+    bool DepthFirstTraverse(std::string start);
 
     // BFS shortest path
     std::vector<Airport*> ShortestPathAirports(std::string start, std::string end);
@@ -37,7 +37,7 @@ public:
     std::vector<Airport*> ShortestPathDistance(std::string start, std::string end);
 
     // PageRank
-    std::vector<std::pair<Airport*, int>> GetRanking(size_t iterations);
+    std::vector<Airport*> GetRanking(size_t iterations);
 
     Airport* GetAirport(std::string iata);
     void ClearCount();
@@ -56,7 +56,6 @@ private:
     void SetDestination(Airport* src, Airport* dest);
     void delete_graph();
     void copy_graph(const FlightGraph& other);
-    int rand_num_map();
 };
 
 int CalculateDistance(double lat1, double lon1, double lat2, double lon2);

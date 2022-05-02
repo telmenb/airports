@@ -5,13 +5,13 @@ CXXFLAGS=-std=c++14 -g -fstandalone-debug
 SRC=src/*
 TEST_SRC=src/flight_graph.cpp src/heap.cpp
 
-exec: bin/exec
+exec: bin/airports
 tests: bin/tests
 
 bin:
 	mkdir bin
 
-bin/exec: $(SRC)
+bin/airports: $(SRC)
 	$(CXX) $(CXXFLAGS) $(CXXEXTRAS) $(INCLUDES) $^ -o $@
 
 bin/tests: tests/tests.cpp $(TEST_SRC)

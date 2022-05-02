@@ -29,7 +29,7 @@ struct Airport {
      * @param lng The real world longitude of the airport
      */
     Airport(std::string code, std::string name, std::string country, std::string lat, std::string lng)
-        : iata(code), longitude(lng), latitude(lat), name(name), country(country) {}
+                             : iata(code), longitude(lng), latitude(lat), name(name), country(country) {}
 
     // Member variables
     std::string iata;
@@ -37,7 +37,8 @@ struct Airport {
     std::string latitude;
     std::string name;
     std::string country;
-    int dij_dist = MAX_DIST; // dij_dist initialized to MAX_DIST for Dijkstra's Algorithm
+    int dij_dist = MAX_DIST;        // dij_dist initialized to MAX_DIST for Dijkstra's Algorithm
+    double page_rank = 1;           // page_rank initialized to 1 for all airports
 
     /**
      * Adjacency list vector of destination Airport*, int pairs.
@@ -45,6 +46,12 @@ struct Airport {
      * their respective edge weights, measured in kilometers.
      */
     std::vector<std::pair<Airport*, int>> destinations;
+
+    /**
+     * Adjacency list to keep track of incoming edges
+     * Used in GetRanking method to recalculate pagerank value 
+     */
+    std::vector<Airport*> arrivals;
 
     /**
      * Comparison operator for Airport objects based on their dij_dist.

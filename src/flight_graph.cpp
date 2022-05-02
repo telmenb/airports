@@ -97,6 +97,7 @@ void FlightGraph::SetDestination(Airport* src, Airport* dest) {
                                      std::stod(dest->longitude));
 
     src->destinations.push_back(std::make_pair(dest, distance));
+    dest->arrivals.push_back(src);
 }
 
 Airport* FlightGraph::GetAirport(std::string iata) {
@@ -141,10 +142,11 @@ int CalculateDistance(double lat1, double lon1, double lat2, double lon2) {
     return (int) (radius * computation);
 }
 
-void FlightGraph::DepthFirstTraverse(std::string start){
+bool FlightGraph::DepthFirstTraverse(std::string start){
     std::ofstream ostr;
     ostr.open ("bin/dfs_output.txt");
-    Airport *start_ = GetAirport(start);
+    Airport* start_ = GetAirport(start);
+    if (!start_) return false;
     std::stack<Airport*> dfs_stack;
 
     dfs_stack.push(start_);
@@ -165,6 +167,7 @@ void FlightGraph::DepthFirstTraverse(std::string start){
     }
 
     ostr.close();
+    return true;
 }
 
 std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::string end) {
@@ -251,41 +254,30 @@ std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::
     return to_return;
 }
 
-bool sort_by_desc_sec(const std::pair<Airport*, int>& a,
-                      const std::pair<Airport*, int>& b) {
-    return a.second > b.second;
+bool sort_by_desc_sec(const Airport* a,
+                      const Airport* b) {
+    return a->page_rank > b->page_rank;
 }
 
-int FlightGraph::rand_num_map(){
-    int rand = std::rand() % map_.size();
-    return rand;
-}
+std::vector<Airport*> FlightGraph::GetRanking(size_t iterations){
+    const double DAMP = 0.15;
 
-std::vector<std::pair<Airport*, int>> FlightGraph::GetRanking(size_t iterations){
-    //start at a random node
-    std::srand(time(0));
-    auto iter = std::next(map_.begin(), rand_num_map()); //select random airport to start
-    iter->second.second += 1; //increment count of the airport;
-    Airport* surfer = iter->second.first;
-
-    //go to any of the neighbors 85% of the time;
-    //go to a completely random guy 15% of the time;
-    for (size_t i = 0; i < iterations; i++){ //idk how many times to do it i just picked 10,000 randomly
-        int damp = std::rand() % 100;
-        if (damp < 86 && surfer->destinations.size() != 0){
-            surfer = (surfer->destinations[std::rand() % surfer->destinations.size()]).first; //get a random neighbor
-            (map_[surfer->iata]).second += 1; //increment count of the airport
-        }
-        else{
-            iter = std::next(map_.begin(), rand_num_map());
-            (map_[surfer->iata]).second += 1; //increment count of the airport;
+    for (size_t i = 0; i < iterations; i++) {
+        for (auto iter : map_) {
+            std::vector<Airport*> in_neighbors = iter.second.first->arrivals;
+            double pagerank_sum = 0;
+            for (size_t j = 0; j < in_neighbors.size(); j++) {
+                Airport* neighbor = in_neighbors.at(j);
+                pagerank_sum += neighbor->page_rank / neighbor->destinations.size();
+            }
+            double random_walk = DAMP / map_.size();
+            iter.second.first->page_rank = random_walk + (1 - DAMP) * pagerank_sum;
         }
     }
 
-
-    std::vector<std::pair<Airport*, int>> to_return;
+    std::vector<Airport*> to_return;
     for (auto it = map_.begin(); it != map_.end(); it++){
-        to_return.push_back((*it).second);
+        to_return.push_back((*it).second.first);
     }
 
     std::sort(to_return.begin(), to_return.end(), sort_by_desc_sec);
