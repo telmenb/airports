@@ -40,8 +40,7 @@ public:
     std::vector<std::pair<Airport*, int>> GetRanking(size_t iterations);
 
     Airport* GetAirport(std::string iata);
-    bool HasVisited(std::string iata);
-    void SetVisited(std::string iata);
+    void ClearCount();
     size_t MapSize() const { return map_.size(); }
     const std::vector<std::pair<Airport*, int>>& GetDestinations(Airport* src) const;
 
@@ -52,6 +51,8 @@ private:
     // Helper functions
     void ReadAirportData(std::string airport_path);
     void ReadRoutesData(std::string routes_path);
+    bool HasVisited(std::string iata);
+    void SetVisited(std::string iata);
     void SetDestination(Airport* src, Airport* dest);
     void delete_graph();
     void copy_graph(const FlightGraph& other);

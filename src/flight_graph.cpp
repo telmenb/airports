@@ -120,6 +120,12 @@ void FlightGraph::SetVisited(std::string iata) {
     query->second.second = 1;
 }
 
+void FlightGraph::ClearCount() {
+    for (auto iter : map_) {
+        iter.second.second = 0;
+    }
+}
+
 int CalculateDistance(double lat1, double lon1, double lat2, double lon2) {
     double d_lat = (lat2 - lat1) * M_PI / 180.0;
     double d_lon = (lon2 - lon1) * M_PI / 180.0;
@@ -163,7 +169,7 @@ void FlightGraph::DepthFirstTraverse(std::string start){
 
 std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::string end) {
     Airport* origin = GetAirport(start);
-    if (!origin) return std::vector<Airport*> {NULL};               // Airport not found
+    if (!origin) return std::vector<Airport*>();                    // Airport not found
     
     std::queue<Airport*> bfs_queue;                                 // Queue used for BFS
     std::map<Airport*, Airport*> track;                             // Map to keep track of previous airport in path
@@ -188,6 +194,7 @@ std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::
     }
 
     if (bfs_queue.empty()) {                                        // No valid path found
+        std::cout << "exiting\n";
         return std::vector<Airport*>();
     }
 
@@ -206,7 +213,7 @@ std::vector<Airport*> FlightGraph::ShortestPathAirports(std::string start, std::
 std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::string end) {
     Airport* origin = GetAirport(start);
     Airport* dest = GetAirport(end);
-    if (!origin || !dest) return std::vector<Airport*> {NULL};      // Airport not found
+    if (!origin || !dest) return std::vector<Airport*>();           // Airport not found
     
     heap priority_queue;                                            // Priority queue querying smallest distance route
     std::map<Airport*, Airport*> track;                             // Map to keep track of previous airport in path

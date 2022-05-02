@@ -59,7 +59,7 @@ TEST_CASE("right_destinations", "[constructor]") {
     FlightGraph fgraph("data/test_airports.dat", "data/test_routes.dat");
 
     Airport* airport4 = fgraph.GetAirport("LAE");
-    REQUIRE(airport4->destinations.size() == 3);
+    REQUIRE(airport4->destinations.size() == 2);
     REQUIRE(airport4->destinations.at(0).first == fgraph.GetAirport("GKA"));
     REQUIRE(airport4->destinations.at(0).second == 157);
 }
@@ -97,21 +97,40 @@ TEST_CASE("assignment_2", "[copy]"){
     REQUIRE(fgraph.MapSize() == fg2.MapSize());
 }
 
-TEST_CASE("DFS traversal", "[DFS]") {
+TEST_CASE("dfs_traversal", "[dfs]") {
     FlightGraph fgraph("data/test_airports.dat", "data/test_routes_dfs.dat");
     fgraph.DepthFirstTraverse("HGU");
-    std::ifstream expected("tests/expected_dfs_output.txt");
+    std::ifstream expected("tests/expected_dfs_output_1.txt");
     std::ifstream actual("bin/dfs_output.txt");
     std::string exp_line;
     std::string act_line;
+    unsigned int count = 0;
 
     while (std::getline(actual, act_line)) {
         std::getline(expected, exp_line);
+        count++;
         REQUIRE(exp_line == act_line);
     }
+    REQUIRE(count == 7);
+
+    expected.close();
+    actual.close();
+
+    fgraph.ClearCount();
+    fgraph.DepthFirstTraverse("GOH");
+    expected.open("tests/expected_dfs_output_2.txt");
+    actual.open("bin/dfs_output.txt");
+    count = 0;
+
+    while (std::getline(actual, act_line)) {
+        std::getline(expected, exp_line);
+        count++;
+        REQUIRE(exp_line == act_line);
+    }
+    REQUIRE(count == 2);
 }
 
-TEST_CASE("Heap Expected", "[heap]") {
+TEST_CASE("heap_expected", "[heap]") {
     Airport air0;
     Airport air1;
     Airport air2;
@@ -149,4 +168,17 @@ TEST_CASE("Heap Expected", "[heap]") {
     pri_queue.pop();
 
     REQUIRE(pri_queue.empty());
+}
+
+TEST_CASE("bfs_shortest_path", "[shortest_path]") {
+    FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
+    std::vector<Airport*> route = fg.ShortestPathAirports("THU", "UAK");
+    REQUIRE(route.size() == 4);
+    // Can't do multiple at a time? ClearCount() not working???
+}
+
+TEST_CASE("bfs_shortest_path_not_found",  "[shortest_path]") {
+    FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
+    std::vector<Airport*> route = fg.ShortestPathAirports("UAK", "THU");
+    REQUIRE(route.size() == 0);
 }

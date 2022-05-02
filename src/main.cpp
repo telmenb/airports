@@ -8,7 +8,9 @@ int main() {
     
     FlightGraph fg("data/airports.dat", "data/routes.dat");
 
-    std::vector<Airport*> vec = fg.ShortestPathDistance("WAW", "ANC");
+    std::vector<Airport*> vec = fg.ShortestPathAirports("WAW", "ANC");
+
+    std::cout << "vec size: " << vec.size() << std::endl;
 
     for (size_t i = 0; i < vec.size(); i++) {
         std::cout << vec.at(i)->iata << std::endl;
