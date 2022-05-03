@@ -254,13 +254,14 @@ std::vector<Airport*> FlightGraph::ShortestPathDistance(std::string start, std::
     return to_return;
 }
 
-bool sort_by_desc_sec(const Airport* a,
-                      const Airport* b) {
+// Sort airports in descending order by page_rank value
+bool sort_by_desc(const Airport* a,
+                  const Airport* b) {
     return a->page_rank > b->page_rank;
 }
 
 std::vector<Airport*> FlightGraph::GetRanking(size_t iterations){
-    const double DAMP = 0.15;
+    const double damp_factor = 0.15;
 
     for (size_t i = 0; i < iterations; i++) {
         for (auto iter : map_) {
@@ -270,8 +271,8 @@ std::vector<Airport*> FlightGraph::GetRanking(size_t iterations){
                 Airport* neighbor = in_neighbors.at(j);
                 pagerank_sum += neighbor->page_rank / neighbor->destinations.size();
             }
-            double random_walk = DAMP / map_.size();
-            iter.second.first->page_rank = random_walk + (1 - DAMP) * pagerank_sum;
+            double random_walk = damp_factor / map_.size();
+            iter.second.first->page_rank = random_walk + (1 - damp_factor) * pagerank_sum;
         }
     }
 
@@ -280,6 +281,6 @@ std::vector<Airport*> FlightGraph::GetRanking(size_t iterations){
         to_return.push_back((*it).second.first);
     }
 
-    std::sort(to_return.begin(), to_return.end(), sort_by_desc_sec);
+    std::sort(to_return.begin(), to_return.end(), sort_by_desc);
     return to_return;
 }
