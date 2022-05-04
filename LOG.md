@@ -21,6 +21,8 @@ We set goals for each other where I was supposed to start writing tests and Anis
 
 We are definitely hoping to pick up the pace on our project and sprint to complete the constructor, as well as DFS traversal the meet the mid-project check-in date.
 
+---
+
 ### Week 3 - April 13th (Anish Sabnis)
 
 Our objective this week was to complete the constructor and complete the DFS traversal. 
@@ -31,6 +33,8 @@ The biggest roadblock we encountered was our team shrinking in half. This has ma
 
 Next week, we hope to complete Djikstra's algorithm. We saw it during lecture and hope to use it to help us.
 
+---
+
 ### Week 4 - April 22nd (Telmen Bayarsaikhan)
 
 Our main objective this week was to start progress on the shortest path algorithms. Initially, we had hoped to complete both the BFS shortest path and Dijkstra's algorithm together by the end, but unfortunately we were only able to finish BFS.
@@ -40,3 +44,27 @@ Anish and I got together and pair-programmed the function. We used a simple Brea
 The biggest hurdle was not configuring the hashmap properly and resetting its previous airports. We had to change it so if an airport already had an entry in the map, we would skip over it.
 
 Next week's main tasks are writing comprehensive tests for the BFS shortest path, as well as finishing Dijkstra's algorithm.
+
+---
+
+### Week 5 - April 27th (Anish Sabnis)
+
+The main objective for this week was to finish Dijkstra's algorithm and write comprehensive tests for the BFS shortest path. We were able to accomplish close to 80% of our goals and successfully moved on to make progress on PageRank.
+
+We worked together in implementing Dijkstra's algorithm, which required a minimum-priority queue. We copied over material from lab_heaps and repurposed it according to our needs, and wrote test cases to ensure proper functionality. Using the pseudocode provided in lecture, we were able to get an implementation working that had correct behaviour for 4/5 cases. I also moved on to stub out the GetRanking() method with our expected implementation this week.
+
+Dijkstra's algorithm is still buggy with a path from Willard Airport in Champaign to JFK in NYC taking Dallas Fort-Worth, instead of O'Hare as its path. We thought the bug was in our heap implementation not working correctly, but after writing tests to verify proper behaviour, we are still a bit lost as to where the bug is.
+
+Next week's goals are to test, polish, and finalize Dijkstra's and PageRank. We are also hoping to implement our UI by May 5th.
+
+---
+
+### Week 6 - May 4th (Telmen Bayarsaikhan)
+
+Our main goals for this week were to finish up our project in its entirety. We fixed the bug in Dijkstra's algorithm, implemented PageRank, and wrote some tests, as well as a simple UI for our users.
+
+Our Dijkstra's algorithm implementation had a small bug in which it did not work as expected in certain cases. We found this out to be caused by us popping the priority queue too early (before adding potential path neighbors). Now it is working as intended. For PageRank, we were able to find a [great resource](https://towardsdatascience.com/pagerank-3c568a7d2332) on the internet, with a thorough explanation and example of an implementation in python. We were able to adapt it into our project and now it is working as expected on both our full dataset and small test dataset. We also implemented a simplistic UI for users to work with. We later made changes to certain components to allow users the ability to define custom file paths for data and/or outputs (as stated in the requirements). Other than such, we've written simple test cases showcasing the correct behaviour of our graph functions.
+
+After figuring out the bug in Dijkstra's algorithm, we've had close to no hurdles in our development. There was a small bug in the ClearCount() method where we were accessing counts by value and not by reference, thus not allowing us to run two graph operations back-to-back as at the start of the second operation, all nodes were already marked as visited. This was only used for testing purposes as users are not allowed to perform several graph operations on a single instance of FlightGraph.
+
+Now our goals are to finish up and polish our project for grading. This might include writing more comprehensive tests for the last two graph functions, as well as work on our final presentation.
