@@ -105,13 +105,6 @@ void heap::updateElem(const size_t & idx, Airport* elem)
     heapifyDown(idx);
 }
 
-void heap::rePrioritize() {
-    for (size_t i = parent(_elems.size() - 1); i > 0; i--) {
-        heapifyDown(i);
-    }
-}
-
-
 bool heap::empty() const
 {
     return _elems.size() == 1;

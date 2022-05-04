@@ -4,10 +4,10 @@
 #include <vector>
 
 /**
- * heap: A priority queue implemented as a heap.
+ * heap: A min-priority queue of Airports implemented as a heap.
  *
- * @author Chase Geigle
- * @date Fall 2012
+ * @design Chase Geigle
+ * @author Telmen Bayarsaikhan, Anish Sabnis
  */
 class heap
 {
@@ -61,8 +61,6 @@ class heap
      */
     void updateElem(const size_t & idx, Airport* elem);
 
-    void rePrioritize();
-
     /**
      * Determines if the given heap is empty.
      *
@@ -70,55 +68,38 @@ class heap
      */
     bool empty() const;
 
-    /*Gets the vector of elems*/
+    /*Gets the vector of elems.*/
     void getElems(std::vector<Airport*> & heaped) const;
 
     /**
      * Helper function that returns the root index of this heap.
-     * Required for grading purposes! (This function should be
-     * ridiculously easy: either return 0 if you plan to store the root
-     * at index 0, or 1 if you plan on storing it at index 1).
-     *
+     * 
      * @return The index of the root node of the heap.
      */
     size_t root() const;
 
-    size_t size() { return _elems.size(); }
-
     /**
-     * Prints the heap to an std::ostream. Given for you. Uses the helper
-     * functions below to do its work, so please implement them!
-     *
-     * @param out The stream to be written to.
-     * @param toPrint The heap to be printed.
+     * Inline helper to return the size of the _elems vector.
+     * 
+     * @return The size of _elems.
      */
-    friend std::ostream& operator<<(std::ostream& out,
-                                    const heap& toPrint);
+    size_t size() { return _elems.size(); }
 
   private:
     /**
-     * The internal storage for this heap. **You may choose whether
-     * your heap is 0-based or 1-based (i.e., you are free to store the
-     * root at either index 0 or index 1).** You should **pick one**, and
-     * write the helper functions according to that choice.
+     * The internal storage for this heap, 1-indexed.
      */
     std::vector<Airport*> _elems;
 
     /**
-     * Comparison functor. This functor takes two parameters and returns true
-     * if the first parameter has a higher priority than the second.
-     *
-     * Compare is a template parameter and defaults to std::less, which creates
-     * a min-heap. So, if `T = int` and `a = 3` and `b = 5`,
-     * `higherPriority(a, b) = true` (`a < b`, so `a` has higher priority) and
-     * `higherPriority(b, a) = false` (`b > a`, so `b` has lower priority)
+     * Comparison function. This function takes two Airports and returns true
+     * if the first parameter has a higher priority (lower dij-dist) than the second.
      */
     bool higherPriority(Airport* one, Airport* two) const { return one < two; }
 
     /**
      * Helper function that returns the index of the left child of a
-     * node in the heap. Required for grading purposes! (And it should
-     * be useful to you as well).
+     * node in the heap.
      *
      * @param currentIdx The index of the current node.
      * @return The index of the left child of the current node.
@@ -127,8 +108,7 @@ class heap
 
     /**
      * Helper function that returns the index of the right child of a
-     * node in the heap. Required for grading purposes! (And it should
-     * be useful to you as well).
+     * node in the heap.
      *
      * @param currentIdx The index of the current node.
      * @return The index of the right child of the current node.
@@ -156,14 +136,7 @@ class heap
 
     /**
      * Helper function that returns the index of the child with the
-     * highest priority as defined by the higherPriority() functor.
-     *
-     * For example, if T == int and the left child of the current node
-     * has data 5 and the right child of the current node has data 9,
-     * this function should return the index of the left child (because
-     * the default higherPriority() behaves like operator<).
-     *
-     * This function assumes that the current node has children.
+     * highest priority as defined by the higherPriority() function.
      *
      * @param currentIdx The index of the current node.
      * @return The index of the highest priority child of this node.

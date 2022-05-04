@@ -37,8 +37,12 @@ struct Airport {
     std::string latitude;
     std::string name;
     std::string country;
-    int dij_dist = MAX_DIST;        // dij_dist initialized to MAX_DIST for Dijkstra's Algorithm
-    double page_rank = 1;           // page_rank initialized to 1 for all airports
+
+    /** Distance from source Airport in Dijkstra's algorithm.*/
+    int dij_dist = MAX_DIST;
+
+    /** PageRank value for ranking, initialized to 1.*/
+    double page_rank = 1;
 
     /**
      * Adjacency list vector of destination Airport*, int pairs.
@@ -55,7 +59,7 @@ struct Airport {
 
     /**
      * Comparison operator for Airport objects based on their dij_dist.
-     * Used in implementing a min-priority queue of Airport objects (see heap.hpp).
+     * Used in implementing a min-priority queue of Airport objects (see heap.hpp, line 99).
      * 
      * @param other The airport to compare with
      * @return true other has less dij_dist
