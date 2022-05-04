@@ -149,7 +149,7 @@ int main() {
     std::cout << "Which of the following operations would you like to run?\n"
         << "1: Depth-first search traversal.\n"
         << "2: Shortest path between two airports.\n"
-        << "3: Get a ranking of the most popular airports in the world.\n";
+        << "3: Get a ranking of the most popular airports in the dataset.\n";
 
     std::string choice;
     std::cin >> choice;
