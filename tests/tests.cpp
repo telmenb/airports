@@ -138,6 +138,8 @@ TEST_CASE("dfs_traversal", "[dfs]") {
     REQUIRE(count == 2);
 }
 
+// Count connected components of JFK and ORD
+
 TEST_CASE("heap_expected", "[heap]") {
     Airport air0;
     Airport air1;
@@ -195,9 +197,25 @@ TEST_CASE("bfs_shortest_path_not_found",  "[shortest_path]") {
 }
 
 TEST_CASE("dijkstra_shortest_path", "[shortest_path]") {
+    /**
+     * Unfortunately there are no ideal paths to test proper performance of Dijkstra's algorithm
+     * in our small test dataset. However, we think this is a great workaround to showcase
+     * correct behaviour.
+     * 
+     * CMI has two outgoing flights, one to ORD (O'Hare international), and one to DFW
+     * (Dallas Fort-Worth international). Both airports have direct routes to JFK,
+     * but going through ORD covers significantly less distance.
+     * 
+     * BFS has us going to DFW first, but Dijkstra's takes us to ORD first.
+     * And you can use your intuition to verify the correctness as well. One cool rout I encourage
+     * you to try is from WAW (Warsaw, Poland) to ANC (Anchorage, AL).
+     */
     FlightGraph fg("data/airports.dat", "data/routes.dat");
     Airport* thu = fg.GetAirport("THU");
     std::vector<Airport*> route = fg.ShortestPathDistance("CMI", "JFK");
     REQUIRE(route.size() == 3);
     REQUIRE(route.at(1)->iata == "ORD");
 }
+
+// Use test routes to test pagerank. Make sure two lone airports have same value.
+// Make sure THU < GKA

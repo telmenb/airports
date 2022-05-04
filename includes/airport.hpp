@@ -10,11 +10,12 @@ const int MAX_DIST = 50000;
 /**
  * Airport: a struct used as a node in the graph representing an Airport
  * 
- * @author Telmen Bayarsaikhan, Anish Sabnis
+ * @authors Telmen Bayarsaikhan, Anish Sabnis
  */
 struct Airport {
     /**
      * Construct a new default Airport object.
+     * 
      * For testing purposes only.
      */
     Airport() {}
@@ -38,32 +39,34 @@ struct Airport {
     std::string name;
     std::string country;
 
-    /** Distance from source Airport in Dijkstra's algorithm.*/
+    /* Distance from source Airport in Dijkstra's algorithm. */
     int dij_dist = MAX_DIST;
 
-    /** PageRank value for ranking, initialized to 1.*/
+    /* PageRank value for ranking, initialized to 1. */
     double page_rank = 1;
 
     /**
      * Adjacency list vector of destination Airport*, int pairs.
+     * 
      * Contains pointers to destination airports with
      * their respective edge weights, measured in kilometers.
      */
     std::vector<std::pair<Airport*, int>> destinations;
 
     /**
-     * Adjacency list to keep track of incoming edges
-     * Used in GetRanking method to recalculate pagerank value 
+     * Adjacency list to keep track of incoming edges.
+     * 
+     * Used in GetRanking method to recalculate pagerank value .
      */
     std::vector<Airport*> arrivals;
 
     /**
      * Comparison operator for Airport objects based on their dij_dist.
+     * 
      * Used in implementing a min-priority queue of Airport objects (see heap.hpp, line 99).
      * 
      * @param other The airport to compare with
-     * @return true other has less dij_dist
-     * @return false other has more dij_dist
+     * @return Whether or not other has less dij_dist
      */
     bool operator>(const Airport*& other) { return dij_dist > other->dij_dist; }
 };

@@ -83,8 +83,10 @@ void page_rank(FlightGraph& fgraph) {
 }
 
 int main() {
-    FlightGraph fgraph("data/airports.dat", "data/routes.dat");
     std::cout << "\n-----------------------------Welcome to Airports!-----------------------------\n\n";
+
+    // TODO: ask for custom dataset
+    FlightGraph fgraph("data/airports.dat", "data/routes.dat");
 
     std::cout << "Which of the following operations would you like to run?\n"
         << "1: Depth-first search traversal.\n"

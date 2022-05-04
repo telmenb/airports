@@ -7,14 +7,11 @@
  * heap: A min-priority queue of Airports implemented as a heap.
  *
  * @design Chase Geigle
- * @author Telmen Bayarsaikhan, Anish Sabnis
+ * @authors Telmen Bayarsaikhan, Anish Sabnis
  */
-class heap
-{
+class heap {
   public:
-    /**
-     * Constructs an empty heap.
-     */
+    /* Constructs an empty heap. */
     heap();
 
     /**
@@ -86,9 +83,7 @@ class heap
     size_t size() { return _elems.size(); }
 
   private:
-    /**
-     * The internal storage for this heap, 1-indexed.
-     */
+    /* The internal storage for this heap, 1-indexed. */
     std::vector<Airport*> _elems;
 
     /**
