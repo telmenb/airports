@@ -119,7 +119,8 @@ int main() {
 
     std::cout << "Which dataset would you like to use?\n"
         << "1: Default dataset.\n"
-        << "2: Provide custom dataset.\n";
+        << "2: Test dataset.\n"
+        << "3: Custom dataset.\n";
     std::string data_choice;
     std::cin >> data_choice;
     break_line();
@@ -130,6 +131,9 @@ int main() {
         airports_path = "data/airports.dat";
         routes_path = "data/routes.dat";
     } else if (data_choice == "2") {
+        airports_path = "data/test_airports.dat";
+        routes_path = "data/test_routes.dat";
+    } else if (data_choice == "3") {
         get_path(airports_path, routes_path);
     } else {
         std::cout << "Invalid input, please try again.\n\n";
