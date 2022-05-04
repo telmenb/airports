@@ -107,9 +107,9 @@ TEST_CASE("assignment_2", "[copy]"){
 
 TEST_CASE("dfs_traversal", "[dfs]") {
     FlightGraph fgraph("data/test_airports.dat", "data/test_routes_dfs.dat");
-    fgraph.DepthFirstTraverse("HGU");
+    fgraph.DepthFirstTraverse("HGU", "tests/dfs_output.txt");
     std::ifstream expected("tests/expected_dfs_output_1.txt");
-    std::ifstream actual("bin/dfs_output.txt");
+    std::ifstream actual("tests/dfs_output.txt");
     std::string exp_line;
     std::string act_line;
     unsigned int count = 0;
@@ -125,9 +125,9 @@ TEST_CASE("dfs_traversal", "[dfs]") {
     actual.close();
 
     fgraph.ClearCount();
-    fgraph.DepthFirstTraverse("GOH");
+    fgraph.DepthFirstTraverse("GOH", "tests/dfs_output.txt");
     expected.open("tests/expected_dfs_output_2.txt");
-    actual.open("bin/dfs_output.txt");
+    actual.open("tests/dfs_output.txt");
     count = 0;
 
     while (std::getline(actual, act_line)) {
@@ -138,7 +138,32 @@ TEST_CASE("dfs_traversal", "[dfs]") {
     REQUIRE(count == 2);
 }
 
-// Count connected components of JFK and ORD
+/**
+ * JFK and ORD are definitively in the same large connected component, therefore the size of 
+ * each output should be identical.
+ */
+TEST_CASE("dfs_traversal_actual", "[dfs]") {
+    FlightGraph fg("data/airports.dat", "data/routes.dat");
+    fg.DepthFirstTraverse("JFK", "tests/dfs_output.txt");
+    std::ifstream ifs("tests/dfs_output.txt");
+    std::string line;
+    unsigned int jfk_count = 0;
+
+    while (std::getline(ifs, line)) {
+        jfk_count++;
+    }
+    ifs.close();
+    fg.ClearCount();
+
+    fg.DepthFirstTraverse("ORD", "tests/dfs_output.txt");
+    ifs.open("tests/dfs_output.txt");
+    unsigned int ord_count = 0;
+
+    while (std::getline(ifs, line)) {
+        ord_count++;
+    }
+    REQUIRE(jfk_count == ord_count);
+}
 
 TEST_CASE("heap_expected", "[heap]") {
     Airport air0;
@@ -184,10 +209,9 @@ TEST_CASE("bfs_shortest_path", "[shortest_path]") {
     FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
     std::vector<Airport*> route = fg.ShortestPathAirports("THU", "UAK");
     REQUIRE(route.size() == 4);
-    // Can't do multiple at a time? ClearCount() not working???
-    // fg.ClearCount();
-    // route = fg.ShortestPathAirports("GKA", "GOH");
-    // REQUIRE(route.size() == 3);
+    fg.ClearCount();
+    route = fg.ShortestPathAirports("GKA", "GOH");
+    REQUIRE(route.size() == 3);
 }
 
 TEST_CASE("bfs_shortest_path_not_found",  "[shortest_path]") {
@@ -196,7 +220,7 @@ TEST_CASE("bfs_shortest_path_not_found",  "[shortest_path]") {
     REQUIRE(route.size() == 0);
 }
 
-TEST_CASE("dijkstra_shortest_path", "[shortest_path]") {
+TEST_CASE("dijkstra's", "[shortest_path]") {
     /**
      * Unfortunately there are no ideal paths to test proper performance of Dijkstra's algorithm
      * in our small test dataset. However, we think this is a great workaround to showcase
@@ -207,15 +231,30 @@ TEST_CASE("dijkstra_shortest_path", "[shortest_path]") {
      * but going through ORD covers significantly less distance.
      * 
      * BFS has us going to DFW first, but Dijkstra's takes us to ORD first.
-     * And you can use your intuition to verify the correctness as well. One cool rout I encourage
+     * And you can use your intuition to verify the correctness as well. One cool route I encourage
      * you to try is from WAW (Warsaw, Poland) to ANC (Anchorage, AL).
      */
     FlightGraph fg("data/airports.dat", "data/routes.dat");
-    Airport* thu = fg.GetAirport("THU");
     std::vector<Airport*> route = fg.ShortestPathDistance("CMI", "JFK");
     REQUIRE(route.size() == 3);
     REQUIRE(route.at(1)->iata == "ORD");
 }
 
-// Use test routes to test pagerank. Make sure two lone airports have same value.
-// Make sure THU < GKA
+TEST_CASE("page_rank", "[ranking]") {
+    FlightGraph fg("data/test_airports.dat", "data/test_routes.dat");
+    std::vector<Airport*> vec = fg.GetRanking(100);
+
+    // Two loners must have same page_rank value
+    Airport* wwk = fg.GetAirport("WWK");
+    Airport* hgu = fg.GetAirport("HGU");
+    REQUIRE(wwk->page_rank == hgu->page_rank);
+
+    /**
+     * Airport with no incoming edge must have less page_rank value
+     * than airport that has no outgoing edge, but has incoming edge from
+     * a popular airport
+     */
+    Airport* thu = fg.GetAirport("THU");
+    Airport* pom = fg.GetAirport("UAK");
+    REQUIRE(thu->page_rank < pom->page_rank);
+}

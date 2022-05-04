@@ -1,2 +1,5 @@
 # Ignore exec files
 bin/*
+
+# Some more test outputs
+tests/dfs_output.txt

@@ -51,14 +51,15 @@ public:
 
     /**
      * Perform a simple Depth-First Traversal starting at a specified airport
-     * and output the results to "bin/dfs_output.txt".
+     * and output the results to out_path.
      * 
      * Output should include all members of startpoint's connected component.
      * 
      * @param start The IATA code of the airport you'd like to start the DFS traversal
+     * @param out_path The desired file path for the output
      * @return Whether the operation was successful or not
      */
-    bool DepthFirstTraverse(std::string start);
+    bool DepthFirstTraverse(std::string start, std::string out_path);
 
     /**
      * Get the shortest path between two airports using a Breadth-First Search.

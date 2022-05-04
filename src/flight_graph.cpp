@@ -122,8 +122,8 @@ void FlightGraph::SetVisited(std::string iata) {
 }
 
 void FlightGraph::ClearCount() {
-    for (auto iter : map_) {
-        iter.second.second = 0;
+    for (auto iter = map_.begin(); iter != map_.end(); ++iter) {
+        iter->second.second = 0;
     }
 }
 
@@ -142,9 +142,9 @@ int CalculateDistance(double lat1, double lon1, double lat2, double lon2) {
     return (int) (radius * computation);
 }
 
-bool FlightGraph::DepthFirstTraverse(std::string start){
+bool FlightGraph::DepthFirstTraverse(std::string start, std::string output_path){
     std::ofstream ostr;
-    ostr.open ("bin/dfs_output.txt");
+    ostr.open (output_path);
     Airport* start_ = GetAirport(start);
     if (!start_) return false;
     std::stack<Airport*> dfs_stack;
