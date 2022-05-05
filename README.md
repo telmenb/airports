@@ -21,9 +21,13 @@ Our program utilizes the terminal to interface with the user so they can use it.
   3. Custom dataset. This will prompt you to give a custom dataset of your choosing. It must match the format and you should write the file directory for where it is located.
 You will then be asked which operation you want to execute. Again, choose the number corresponding to the function you want to run.
   1. DFS traversal. You will be prompted for a starting point. You should input the IATA code of the desired airport and we will print a DFS traversal in one of two locations
-    a. bin/dfs_output.txt. This will simply print the traversal to this file, which you can find in the bin folder.
-    b. Somewhere else. You will be prompted to input a custom file path, where the output will be printed to.
+   
+   a. bin/dfs_output.txt. This will simply print the traversal to this file, which you can find in the bin folder.
+  
+   b. Somewhere else. You will be prompted to input a custom file path, where the output will be printed to.
   2. Shortest path between two airports. You will then be prompted on whether you want the shortest path based on minimum airports visited, or minimum distance traveled. You should input the number corresponding to your choice.
-    a. Least number of airports visited. In this case, you will be prompted for a departure airport followed by a destination airport. You should input the IATA codes for each airport. The result will be printed to the terminal.
-    b. Least distance traveled. In this case, you will be prompted for a departure airport followed by a destination airport. You should input the IATA codes for each airport. The result will be printed to the terminal.
+
+   a. Least number of airports visited. In this case, you will be prompted for a departure airport followed by a destination airport. You should input the IATA codes for each airport. The result will be printed to the terminal.
+   
+   b. Least distance traveled. In this case, you will be prompted for a departure airport followed by a destination airport. You should input the IATA codes for each airport. The result will be printed to the terminal.
   3. Get a ranking of the most popular airports in the dataset. You will then be prompted to input how many of the top airports you would like to see. (ie. top 10 most popular, top 15 most popular, etc). You should input a whole number and the rankings will print to the terminal along with their corresponding "weight." This weight was calculated in our pagerank algorithm.
