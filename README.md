@@ -12,7 +12,7 @@ Github Organization:
  - Tests: We wrote all our tests in the tests folder under "tests.cpp". It contains all the testing we did for our functions. All of our functions have thorogh tests done to ensure their functionality.
  - Log: Our log is titled "LOG.md". It is located in our main directory.
  - Proposal: Our proposal is titled "PROPOSAL.md". It is located in our main directory.
- - Written Report: Our report is titled "REPORT.md". It is located in our main directory.
+ - Written Report: Our report is titled "RESULTS.md". It is located in our main directory.
  - Presentation: Our presentation is titled "WHATEVER WE CALL IT". It is located in our main directory.
 
 Running Instructions:
