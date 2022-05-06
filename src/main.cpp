@@ -78,7 +78,7 @@ void dijkstra(FlightGraph& fgraph) {
     break_line();
     std::vector<Airport*> vec = fgraph.ShortestPathDistance(departure, arrival);
     if (vec.size() == 0) {
-        std::cout << "No valid path found.\n\n";
+        std::cout << "No valid path found or invalid input.\n\n";
         return;
     }
     for (size_t i = 0; i < vec.size(); i++) {
