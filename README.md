@@ -4,9 +4,7 @@
 ## Team name: 11:59  
 ## Airport and Flight Data: [OpenFlights](https://openflights.org/data.html)
 
----
-
-## Project in general:  
+## Project in General:  
 
 Our projects makes use of the openflights dataset and the airports and routes between them. Using this dataset, we wanted to create two main functions: determining the shortest path between two airports, determining the most popular airports in the world. 
 
